@@ -6,7 +6,11 @@ export default OriginalComponent => class DecoratedComponent extends React.Compo
         openItemId: null
     }
 
-    toggleItem = openItemId => this.setState({ openItemId })
+    toggleItem = openItemId => {
+        const {openItemId: stateOpenItemId} = this.state
+
+        this.setState({ openItemId: (stateOpenItemId !== openItemId ? openItemId : null)})
+    }
 
     render() {
         return <OriginalComponent {...this.props}

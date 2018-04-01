@@ -8,7 +8,8 @@ class UserForm extends Component {
     render() {
         return (
             <div>
-                User: <input value = {this.state.user} onChange = {this.handleChange}/>
+                User: <input value = {this.state.user} onChange = {this.handleChange} />
+                <br/><br/>
             </div>
         )
     }
