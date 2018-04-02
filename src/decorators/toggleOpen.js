@@ -1,6 +1,12 @@
 import React from 'react'
+import PropTypes from "prop-types";
 
 export default (OriginalComponent) => class ToggleOpen extends React.Component {
+
+    static propTypes = {
+        toggleOpen: PropTypes.func
+    }
+
     state = {
         isOpen: false
     }

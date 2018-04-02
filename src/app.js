@@ -3,8 +3,18 @@ import ArticleList from './components/article-list'
 import Chart from './components/chart'
 import UserForm from './components/user-form'
 import Filters from './components/filters'
+import PropTypes from "prop-types";
 
 class App extends Component {
+
+    static propTypes = {
+        articles: PropTypes.array
+    }
+
+    static defaultProps = {
+        articles: []
+    }
+
     render() {
         const { articles } = this.props
 
@@ -13,7 +23,7 @@ class App extends Component {
                 <UserForm />
                 <Filters articles = {articles} />
                 <Chart articles = {articles} />
-                <ArticleList articles = {articles}/>
+                <ArticleList articles = { articles } />
             </div>
         )
     }
