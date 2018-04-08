@@ -28,16 +28,34 @@ export class ArticleList extends Component {
     }
 
     getArticles() {
-        const { articles, openItemId, toggleItem } = this.props
-        return articles.map(article => (
-            <li key = {article.id} className = "test--article-list__item">
+        const { articles, openItemId, toggleItem, selectedArticles, range: { from, to } } = this.props
+
+        return articles.map(article => {
+
+            if (selectedArticles && selectedArticles.length && !selectedArticles.find(item => item.label === article.title)) {
+                return ''
+            }
+
+            if (from) {
+                if (new Date(from).getTime() > new Date(article.date).getTime()) {
+                    return ''
+                }
+            }
+
+            if (to) {
+                if (new Date(to).getTime() < new Date(article.date).getTime()) {
+                    return ''
+                }
+            }
+
+            return <li key = {article.id} className = "test--article-list__item">
                 <Article article = {article}
                          isOpen = {article.id === openItemId}
                          toggleOpen = {toggleItem}
                          ref = {this.setListElementRef}
                 />
             </li>
-        ))
+        })
     }
 
     setListElementRef = _ => {
@@ -45,6 +63,10 @@ export class ArticleList extends Component {
     }
 }
 
+
 export default connect(state => ({
-    articles: state.articles
+    articles: state.articles,
+    selectedArticles: state.selectedArticles,
+    range: state.rangeDates,
+
 }))(accordion(ArticleList))
