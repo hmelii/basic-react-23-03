@@ -21,6 +21,7 @@ class Article extends PureComponent {
         return (
             <div>
                 <h2>{article.title}</h2>
+                <div><time>{ article.date }</time></div>
                 <button className = "test--article__btn"
                         onClick = {() => toggleOpen(article.id)}
                 >
