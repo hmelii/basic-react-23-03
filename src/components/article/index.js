@@ -5,6 +5,7 @@ import CommentList from '../comment-list'
 import CSSTransition from 'react-addons-css-transition-group'
 import { deleteArticle } from '../../ac'
 import './style.css'
+import {createArticleSelector} from "../../selectors";
 
 class Article extends PureComponent {
     state = {
@@ -54,7 +55,7 @@ class Article extends PureComponent {
         return (
             <section className = "test--article__body">
                 {article.text}
-                <CommentList comments={article.comments}/>
+                <CommentList comments={article.comments} idArticle = { article.id } />
             </section>
         )
     }
@@ -62,13 +63,18 @@ class Article extends PureComponent {
 
 Article.propTypes = {
     isOpen: PropTypes.bool,
-    article: PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        text: PropTypes.string
-    }).isRequired,
+    id: PropTypes.string.isRequired,
     toggleOpen: PropTypes.func,
     deleteArticle: PropTypes.func
 }
 
+const createMapStateToProps = () => {
+    const articleSelector = createArticleSelector()
 
-export default connect(null, { deleteArticle })(Article)
+    return (state, ownProps) => ({
+        article: articleSelector(state, ownProps)
+    })
+}
+
+export default connect(createMapStateToProps, { deleteArticle })(Article)
+
