@@ -8,7 +8,7 @@ import {filtratedArticles} from '../../selectors'
 
 export class ArticleList extends Component {
     static propTypes = {
-        articles: PropTypes.array.isRequired,
+        articles: PropTypes.object.isRequired,
 
         //from accordion decorator
         openItemId: PropTypes.string,
@@ -31,15 +31,25 @@ export class ArticleList extends Component {
 
     getArticles() {
         const { articles, openItemId, toggleItem } = this.props
-        return articles.map(article => (
-            <li key = {article.id} className = "test--article-list__item">
-                <Article article = {article}
-                         isOpen = {article.id === openItemId}
-                         toggleOpen = {toggleItem}
-                         ref = {this.setListElementRef}
-                />
-            </li>
-        ))
+
+        const articlesRender = []
+
+        for (let key in articles) {
+            if (articles.hasOwnProperty(key)) {
+                articlesRender.push(
+                    <li key = {articles[key].id} className = "test--article-list__item">
+                        <Article id = { key }
+                                 isOpen = {articles[key].id === openItemId}
+                                 toggleOpen = {toggleItem}
+                                 ref = {this.setListElementRef}
+                        />
+                    </li>
+                )
+            }
+        }
+
+        return articlesRender
+
     }
 
     setListElementRef = _ => {
