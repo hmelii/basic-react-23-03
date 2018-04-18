@@ -17,7 +17,7 @@ class CommentList extends Component {
         toggleOpen: PropTypes.func
     }
 
-    componentWillReceiveProps({ isOpen, article, loadArticleComments }) {
+    componentDidMount({ isOpen, article, loadArticleComments }) {
         if (!this.props.isOpen && isOpen && !article.commentsLoading && !article.commentsLoaded) {
             loadArticleComments(article.id)
         }
